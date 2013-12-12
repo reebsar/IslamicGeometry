@@ -1,0 +1,81 @@
+//Push 'h' to apply Hexagon
+//Push 's' to apply Star
+
+
+int x = 80; //can change to range -450 to 450.
+int y= 90; 
+int diameter=300;
+
+void setup()
+{
+  size(900, 900);
+  background ( #66CDAA  );
+  smooth();
+}
+void keyPressed() {
+  if (key == 'h') {
+    Hexagon(diameter); 
+  } 
+  if (key == 's') {
+    Star(diameter);
+  }
+}
+void draw()
+{ 
+  noFill(); 
+  strokeWeight(1);
+  stroke(#F5D085);
+  translate(width/2, height/2); //origin at center of grid
+  circle_Molecule(diameter);
+}
+
+void circle_Molecule(float d) {
+
+  //center
+  ellipse(x, y, d, d);
+
+  //noFill(); //right circle
+  ellipse(x+(d/2), y, d, d);
+
+  //noFill(); //left circle
+  ellipse(x-(d/2), y, d, d);
+
+
+  //noFill(); //bottom right circle
+  ellipse(x+(cos(radians(60))*(d/2)), y+(sin(radians(60))*(d/2)), d, d);
+
+
+  //noFill(); //bottom left circle
+  ellipse(x+(cos(radians(120))*(d/2)), y+(sin(radians(120))*(d/2)), d, d);
+
+
+  //top right circle
+  ellipse(x+(cos(radians(300))*(d/2)), y+((sin(radians(300))*(d/2))), d, d);
+
+  //top left circle
+  ellipse(x+(cos(radians(240))*(d/2)), y+(sin(radians(240))*(d/2)), d, d);
+}
+
+void Hexagon (float d){
+stroke(200,55,9);
+beginShape();
+vertex(x+(cos(radians(60))*(d/2)), y+(sin(radians(60))*(d/2)));
+vertex(x+(cos(radians(120))*(d/2)), y+(sin(radians(120))*(d/2)));
+vertex(x+(cos(radians(180))*(d/2)), y+(sin(radians(180))*(d/2)));
+vertex(x+(cos(radians(240))*(d/2)), y+(sin(radians(240))*(d/2)));
+vertex(x+(cos(radians(300))*(d/2)), y+(sin(radians(300))*(d/2)));
+vertex(x+(cos(radians(0))*(d/2)), y+(sin(radians(0))*(d/2)));
+endShape(CLOSE);
+
+void Star (int d){
+  noStroke();
+  fill(#BBB6FF);
+  
+  triangle(x+(cos(radians(270))*(d/2)),y+(sin(radians(270))*(d/2)), x+(cos(radians(30))*(d/2)),
+  y+(sin(radians(30))*(d/2)), 
+  x+(cos(radians(150))*(d/2)),y+(sin(radians(150))*(d/2)));
+  
+  triangle(x+(cos(radians(90))*(d/2)),y+(sin(radians(90))*(d/2)), x+(cos(radians(210))*(d/2)),
+  y+(sin(radians(210))*(d/2)), 
+  x+(cos(radians(330))*(d/2)),y+(sin(radians(330))*(d/2)));
+}
