@@ -1,0 +1,111 @@
+PFont f;
+boolean introScreen;
+int x; 
+int y; 
+int diameter=100;
+
+void setup()
+{
+  size(900, 900);
+  
+  f = loadFont("Ming-Lt-HKSCS-UNI-H-48.vlw");
+  smooth();
+  appSetup();
+  // introScreen = true;
+}
+
+void appSetup() {
+  introScreen=true;
+}
+
+void draw() {
+  keyPressed();
+  println(introScreen);
+  if (introScreen=false) {
+    DecaPage();
+  }
+  else {
+    if (introScreen=true) {
+      showIntro();
+    }
+  }
+}
+
+void keyPressed(){
+  if (key=='s'){
+    introScreen = false;}
+}
+
+void DecaPage() {
+  
+  background (#66CDAA); //cerulean
+  
+  if (key == 'e') {
+    decagon(diameter);
+  }
+
+  if (key == 'm') {
+    decaTangle(diameter);
+  }
+
+  if (key == 'g') {
+    grid();
+  }
+}
+
+void decagon(int d) {
+
+  noFill();
+  strokeWeight(1);
+    stroke(#F5D085);
+    
+  beginShape();
+  for (int z=18; z<360; z=z+36){
+    vertex(x+(cos(radians(z))*(d/2)), y+(sin(radians(z))*(d/2)));}
+      endShape(CLOSE);
+}
+void decaTangle(int d) {
+  
+  line(x+(cos(radians(0))*(d/2.1)), y+(sin(radians(0))*(d/2.1)), x+(cos(radians(108))*(d/2.1)), y+(sin(radians(108))*(d/2.1)));
+  line(x+(cos(radians(108))*(d/2.1)), y+(sin(radians(108))*(d/2.1)), x+(cos(radians(216))*(d/2.1)), y+(sin(radians(216))*(d/2.1)));
+  line(x+(cos(radians(288))*(d/2.1)), y+(sin(radians(288))*(d/2.1)), x+(cos(radians(36))*(d/2.1)), y+(sin(radians(36))*(d/2.1)));
+  line(x+(cos(radians(36))*(d/2.1)), y+(sin(radians(36))*(d/2.1)), x+(cos(radians(144))*(d/2.1)), y+(sin(radians(144))*(d/2.1)));
+  line(x+(cos(radians(144))*(d/2.1)), y+(sin(radians(144))*(d/2.1)), x+(cos(radians(252))*(d/2.1)), y+(sin(radians(252))*(d/2.1)));
+  //line(x+(cos(radians(252))*(d/2)), y+(sin(radians(252))*(d/2)), x+(cos(radians(324))*(d/2)), y+(sin(radians(324))*(d/2)));
+  line(x+(cos(radians(324))*(d/2.1)), y+(sin(radians(324))*(d/2.1)), x+(cos(radians(72))*(d/2.1)), y+(sin(radians(72))*(d/2.1)));
+  line(x+(cos(radians(72))*(d/2.1)), y+(sin(radians(72))*(d/2.1)), x+(cos(radians(180))*(d/2.1)), y+(sin(radians(180))*(d/2.1)));
+  line(x+(cos(radians(180))*(d/2.1)), y+(sin(radians(180))*(d/2.1)), x+(cos(radians(288))*(d/2.1)), y+(sin(radians(288))*(d/2.1)));
+  line(x+(cos(radians(252))*(d/2.1)), y+(sin(radians(252))*(d/2.1)), x+(cos(radians(0))*(d/2.1)), y+(sin(radians(0))*(d/2.1)));
+  line(x+(cos(radians(216))*(d/2.1)), y+(sin(radians(216))*(d/2.1)), x+(cos(radians(324))*(d/2.1)), y+(sin(radians(324))*(d/2.1)));
+}
+
+//calculating the distance between the centerpoints of decagons to construct the grid (using isocolese triangle/pythagorean)
+  
+
+void grid(){
+  
+  float decaHeightAcross = sqrt(pow((diameter/2), 2)-(pow(sin(36/2), 2)));
+  float AcrossVal = (2* (diameter/2)*(sin(radians(72/2))))+ 2*(sqrt(pow((diameter/2), 2)-(pow(sin(36/2), 2))));
+  float UpVal2 = diameter + ((2* (diameter/2)*(sin(radians(36/2)))))*.3;
+
+  for (x=-width/2; x<width/2; x = x + int(AcrossVal)) { //rounding the exact distances to an integer
+
+      for (y = -height/2; y<height/2; y = y + int(UpVal2)) {
+      decagon(diameter);
+      decaTangle(diameter);
+    }
+  }
+  
+  pushMatrix();
+  translate(AcrossVal/2, UpVal2/2);
+  
+     for (x=-width/2; x<width/2; x = x + int(AcrossVal)) { //rounding the exact distances to an integer
+
+      for (y = -height/2; y<height/2; y = y + int(UpVal2)) {
+      decagon(diameter);
+      decaTangle(diameter);
+    }
+  }
+  popMatrix();
+    
+}
