@@ -1,0 +1,1096 @@
+import point2line.*;
+
+Vect2[] line1;
+Vect2[] line2;
+Vect2[] line3;
+Vect2[] line4;
+Vect2[] line5;
+Vect2[] line6;
+Vect2[] line7;
+Vect2[] line8;
+Vect2[] line9;
+Vect2[] line10;
+Vect2[] star = new Vect2[ 10 ]; //star fill on Deca Info();
+Vect2[] arrow = new Vect2[ 8 ];
+Vect2[] details = new Vect2[ 7 ]; 
+//Vect2 mouse = new Vect2( mouseX, mouseY );
+int n;
+
+PFont f;
+PFont cursive;
+int x; 
+int y; 
+int diameter=100;
+int buttonSize = diameter;
+
+
+boolean introScreen;
+boolean buttonsOn;
+//boolean showIntroIfTrue;
+//boolean showButtonIfTrue;
+boolean DecaOn;
+boolean RoseOn;
+boolean TriangleOn;
+boolean MenuInfoOn;
+boolean InfoOn;
+PImage lattice;
+PImage button;
+PImage book;
+int r=100;
+color beige = color(255, 247, 211);
+color rose = color(255, 166, 166);
+color cerulean = color(102, 105, 170);
+int z;
+int s = second();
+
+void setup()
+{
+  size(700, 700);
+  lattice = loadImage("lattice.jpg");
+  button = loadImage("button.png");
+  book = loadImage("Daud_Sutton_Book.jpg");
+  f = loadFont("STKaiti-SC-Bold-48.vlw");
+  cursive = loadFont("Zapfino-48.vlw");
+  background (#66CDAA);
+  smooth();
+  appSetup();
+  noFill();
+  frameRate(3);
+  line1 = new Vect2[2];
+  line1[0]= new Vect2((x+(cos(radians(0))*((diameter*4)/2.1))), ((y+(sin(radians(0))*((diameter*4)/2.1)))));
+  line1[1]= new Vect2(x+(cos(radians(108))*(diameter*4/2.1)), y+(sin(radians(108))*(diameter*4/2.1)));
+
+  line2 = new Vect2[2];
+  line2[0] = new Vect2((x+(cos(radians(108))*(diameter*4/2.1))), (y+(sin(radians(108))*(diameter*4/2.1)))) ;
+  line2[1] = new Vect2((x+(cos(radians(216))*(diameter*4/2.1))), (y+(sin(radians(216))*(diameter*4/2.1))));
+
+  line3 = new Vect2[2]; 
+  line3[0]= new Vect2(x+(cos(radians(288))*(diameter*4/2.1)), y+(sin(radians(288))*(diameter*4/2.1)));
+  line3[1]= new Vect2(x+(cos(radians(36))*(diameter*4/2.1)), y+(sin(radians(36))*(diameter*4/2.1)));
+
+  line4 = new Vect2[2];
+  line4[0] = new Vect2(x+(cos(radians(36))*(diameter*4/2.1)), y+(sin(radians(36))*(diameter*4/2.1)));
+  line4[1] = new Vect2(x+(cos(radians(144))*(diameter*4/2.1)), y+(sin(radians(144))*(diameter*4/2.1)));
+
+  line5 = new Vect2[2];
+  line5[0] = new Vect2( x+(cos(radians(144))*(diameter*4/2.1)), y+(sin(radians(144))*(diameter*4/2.1))  );
+  line5[1] = new Vect2( x+(cos(radians(252))*(diameter*4/2.1)), y+(sin(radians(252))*(diameter*4/2.1))  );
+
+  line6 = new Vect2[2];
+  line6[0] = new Vect2( x+(cos(radians(324))*(diameter*4/2.1)), y+(sin(radians(324))*(diameter*4/2.1))  );
+  line6[1] = new Vect2( x+(cos(radians(72))*(diameter*4/2.1)), y+(sin(radians(72))*(diameter*4/2.1))  );
+
+  line7 = new Vect2[2];
+  line7[0] = new Vect2( x+(cos(radians(180))*(diameter*4/2.1)), y+(sin(radians(180))*(diameter*4/2.1))  );
+  line7[1] = new Vect2(  x+(cos(radians(72))*(diameter*4/2.1)), y+(sin(radians(72))*(diameter*4/2.1)) );
+
+  line8 = new Vect2[2];
+  line8[0] = new Vect2( x+(cos(radians(180))*(diameter*4/2.1)), y+(sin(radians(180))*(diameter*4/2.1))  );
+  line8[1] = new Vect2( x+(cos(radians(288))*(diameter*4/2.1)), y+(sin(radians(288))*(diameter*4/2.1))  );
+
+  line9 = new Vect2[2];
+  line9[0] = new Vect2( x+(cos(radians(252))*(diameter*4/2.1)), y+(sin(radians(252))*(diameter*4/2.1))  );
+  line9[1] = new Vect2( x+(cos(radians(0))*(diameter*4/2.1)), y+(sin(radians(0))*(diameter*4/2.1))  );
+
+  line10 = new Vect2[2];
+  line10[0] = new Vect2( x+(cos(radians(216))*(diameter*4/2.1)), y+(sin(radians(216))*(diameter*4/2.1))  );
+  line10[1] = new Vect2(  x+(cos(radians(324))*(diameter*4/2.1)), y+(sin(radians(324))*(diameter*4/2.1)) );
+}
+
+void appSetup() {
+  introScreen=true;
+  buttonsOn = false;
+  DecaOn = false;
+  RoseOn = false;
+  TriangleOn = false;
+  MenuInfoOn = false;
+  InfoOn = true;
+}
+
+
+
+void mousePressed() { //DecaPage button on top left
+  if (buttonsOn && !DecaOn && !RoseOn && !TriangleOn) {
+    //    pushMatrix();
+    //    translate(width/2, height/2);
+    if (mouseX > width/6.4 && mouseX<(width/6.4)+160  //Decagon Page button top left
+    && mouseY>height/6.4 && mouseY<(height/6.4)+160) {
+      introScreen = false;
+      buttonsOn = false;
+      RoseOn=false;
+      DecaOn=true;
+      DecaPage(DecaOn);
+      //popMatrix();
+    }
+
+
+    if (mouseX > width/1.6 && mouseX<(width/1.6)+160 //Rosette button on top right
+    && mouseY>height/6.4 && mouseY<(height/6.4)+160) {
+      introScreen = false;
+      buttonsOn = false;
+      DecaOn = false;
+      TriangleOn = false;
+      RoseOn = true;
+      Rosette(RoseOn);
+    }
+    if (mouseX > width/6.4 && mouseX<(width/6.4)+160 //Triangle button on bottom left 
+    && mouseY>height/1.6 && mouseY<(height/1.6)+160) {
+      introScreen = false;
+      buttonsOn = false;
+      DecaOn = false;
+      RoseOn = false;
+      TriangleOn = true;
+      Triangle(TriangleOn);
+    }
+    if (mouseX > width/1.6 && mouseX<(width/1.6)+160 //Menu Info page about book button on bottom right
+    && mouseY>height/1.6 && mouseY<(height/1.6)+160) {
+      introScreen = false;
+      buttonsOn = false;
+      DecaOn = false;
+      RoseOn = false;
+      TriangleOn = false;
+      MenuInfoOn = true;
+      MenuInfo(MenuInfoOn);
+    }
+  }
+}
+
+
+void keyPressed() {
+  if (key=='p') {
+    introScreen = false;
+    buttonsOn = true;
+    RoseOn = false;
+    DecaOn = false;
+    TriangleOn = false;
+  }
+  if (key == 'i' && RoseOn) {
+
+
+    infoPage(InfoOn);
+  }
+
+
+
+  if (key == 'i' && DecaOn) {
+    pushMatrix();
+
+    n = int(random(3));
+    infoPage2(InfoOn);
+    translate(width/2, height/2);
+    if (n == 0) {
+      arrow();
+    }
+
+    else if (n == 1) {
+      star();
+    }
+
+    else if (n == 2) {
+      details();
+    }
+    popMatrix();
+  }
+
+  if (key == 'e' && DecaOn) {
+    pushMatrix();
+    translate(width/2, height/2);
+    decagon(diameter);
+    popMatrix();
+  }
+  if (key == 'g' && DecaOn) {
+    stroke(beige);
+    pushMatrix();
+    translate(width/2, height/2);
+    deca_grid();
+    popMatrix();
+    buttonRows();
+  }
+
+
+  if (key == 'd' && DecaOn) {
+    background(#66CDAA);
+    stroke(beige);
+    pushMatrix();
+    translate(width/2, height/2);
+    deca_design();
+    popMatrix();
+    buttonRows();
+  }
+
+  if (key == 'e' && RoseOn) {
+    pushMatrix();
+    translate(width/2, height/2);
+    circle_Molecule12();
+    popMatrix();
+    buttonRows();
+  }
+  if (key == 'g' && RoseOn) {
+    stroke(#F5D085);
+    background(rose);
+    circle_grid();
+    buttonRows();
+  }
+
+
+  if (key == 'd' && RoseOn) {
+    // stroke(#fc04ca);
+    poli_Shape();
+    poli_Shape2();
+    buttonRows();
+  }
+
+  if (key == 'e' && TriangleOn) {
+    Triangle();
+    buttonRowsShort();
+  }
+  if (key == 'g' && TriangleOn) {
+    stroke(#F5D085);
+    Triangle_Grid();
+    buttonRowsShort();
+  }
+
+
+  if (key == 'd' && TriangleOn) {
+    // stroke(#fc04ca);
+    Triangle_Design();
+    buttonRowsShort();
+  }
+}
+
+
+void draw() {
+  showIntro(introScreen);
+  buttonPage(buttonsOn);
+}
+
+//String function[] = new String[2];
+//function[0]= "star()";
+//function[1] = "arrow()";
+void infoPage2(boolean ShowInfoIfTrue) {
+  background(#66CDAA);
+  buttonRows();
+  pushMatrix();
+    translate(width/2, height/2);
+  if (ShowInfoIfTrue = true) {
+    textSize(18);
+    text("The underlying tiling pattern is usually hidden beneath the final design,", 0, -height/2.5);
+    text("as if behind a veil, but the viewer is always given an intimation of the hidden order and", 0, -height/2.7);
+    text("this is part of what gives the designs their meditative power.", 0, -height/3);
+    text("Richard Henry", 0, -height/3.3);
+
+    text("press I to", -width/2.5, 0);
+    textFont(cursive, 18);
+    text("illustrate", -width/2.5, 35);
+    text("tiles", -width/3, 60);
+    //decaTangle(diameter*4);
+
+    line( line1[ 0 ].x, line1[ 0 ].y, line1[ 1 ].x, line1[ 1 ].y );
+    line( line2[ 0 ].x, line2[ 0 ].y, line2[ 1 ].x, line2[ 1 ].y );
+    line( line3[ 0 ].x, line3[ 0 ].y, line3[ 1 ].x, line3[ 1 ].y );
+    line( line4[ 0 ].x, line4[ 0 ].y, line4[ 1 ].x, line4[ 1 ].y );
+    line( line5[ 0 ].x, line5[ 0 ].y, line5[ 1 ].x, line5[ 1 ].y );
+    line( line6[ 0 ].x, line6[ 0 ].y, line6[ 1 ].x, line6[ 1 ].y );
+    line( line7[ 0 ].x, line7[ 0 ].y, line7[ 1 ].x, line7[ 1 ].y );
+    line( line8[ 0 ].x, line8[ 0 ].y, line8[ 1 ].x, line8[ 1 ].y );
+    line( line9[ 0 ].x, line9[ 0 ].y, line9[ 1 ].x, line9[ 1 ].y );
+    line( line10[ 0 ].x, line10[ 0 ].y, line10[ 1 ].x, line10[ 1 ].y );
+
+
+
+
+    //inner ring vertives
+    Vect2 intersectionPoint20 = Space2.lineIntersection( line8[ 0 ], line8[ 1 ], line5[ 0 ], line5[ 1 ] );
+    Vect2 intersectionPoint21 = Space2.lineIntersection( line10[ 0 ], line10[ 1 ], line8[ 0 ], line8[ 1 ] );
+    Vect2 intersectionPoint22 = Space2.lineIntersection( line9[ 0 ], line9[ 1 ], line10[ 0 ], line10[ 1 ] );
+    Vect2 intersectionPoint23 = Space2.lineIntersection( line9[ 0 ], line9[ 1 ], line3[ 0 ], line3[ 1 ] );
+    Vect2 intersectionPoint24 = Space2.lineIntersection( line3[ 0 ], line3[ 1 ], line6[ 0 ], line6[ 1 ] );
+    Vect2 intersectionPoint25 = Space2.lineIntersection( line1[ 0 ], line1[ 1 ], line6[ 0 ], line6[ 1 ] );
+    Vect2 intersectionPoint26 = Space2.lineIntersection( line1[ 0 ], line1[ 1 ], line4[ 0 ], line4[ 1 ] );
+    Vect2 intersectionPoint27 = Space2.lineIntersection( line4[ 0 ], line4[ 1 ], line7[ 0 ], line7[ 1 ] );
+    Vect2 intersectionPoint28 = Space2.lineIntersection( line2[ 0 ], line2[ 1 ], line7[ 0 ], line7[ 1 ] );
+    Vect2 intersectionPoint29 = Space2.lineIntersection( line2[ 0 ], line2[ 1 ], line5[ 0 ], line5[ 1 ] );
+
+    //middle ring vertices
+    Vect2 intersectionPoint1 = Space2.lineIntersection( line1[ 0 ], line1[ 1 ], line3[ 0 ], line3[ 1 ] );
+    Vect2 intersectionPoint2 = Space2.lineIntersection( line2[ 0 ], line2[ 1 ], line4[ 0 ], line4[ 1 ] );
+    Vect2 intersectionPoint3 = Space2.lineIntersection( line3[ 0 ], line3[ 1 ], line5[ 0 ], line5[ 1 ] );
+    Vect2 intersectionPoint4 = Space2.lineIntersection( line4[ 0 ], line4[ 1 ], line6[ 0 ], line6[ 1 ] );
+    Vect2 intersectionPoint5 = Space2.lineIntersection( line5[ 0 ], line5[ 1 ], line7[ 0 ], line7[ 1 ] );
+    //    Vect2 intersectionPoint6 = Space2.lineIntersection( line6[ 0 ], line6[ 1 ], line8[ 0 ], line8[ 1 ] );
+    Vect2 intersectionPoint7 = Space2.lineIntersection( line7[ 0 ], line7[ 1 ], line9[ 0 ], line9[ 1 ] );
+    Vect2 intersectionPoint8 = Space2.lineIntersection( line8[ 0 ], line8[ 1 ], line9[ 0 ], line9[ 1 ] );
+    Vect2 intersectionPoint10 = Space2.lineIntersection( line7[ 0 ], line7[ 1 ], line1[ 0 ], line1[ 1 ] );
+    Vect2 intersectionPoint11 = Space2.lineIntersection( line2[ 0 ], line2[ 1 ], line8[ 0 ], line8[ 1 ] );
+    Vect2 intersectionPoint12 = Space2.lineIntersection( line5[ 0 ], line5[ 1 ], line10[ 0 ], line10[ 1 ] );
+    Vect2 intersectionPoint13 = Space2.lineIntersection( line3[ 0 ], line3[ 1 ], line10[ 0 ], line10[ 1 ] );
+    Vect2 intersectionPoint14 = Space2.lineIntersection( line6[ 0 ], line6[ 1 ], line9[ 0 ], line9[ 1 ] );
+
+    //outtermost ring vertices
+    Vect2 intersectionPoint30 = Space2.lineIntersection( line6[ 0 ], line6[ 1 ], line10[ 0 ], line10[ 1 ] );
+    Vect2 intersectionPoint31 = Space2.lineIntersection( line1[ 0 ], line1[ 1 ], line9[ 0 ], line9[ 1 ] );
+    Vect2 intersectionPoint32 = Space2.lineIntersection( line3[ 0 ], line3[ 1 ], line4[ 0 ], line4[ 1 ] );
+    Vect2 intersectionPoint33 = Space2.lineIntersection( line6[ 0 ], line6[ 1 ], line7[ 0 ], line7[ 1 ] );
+    Vect2 intersectionPoint34 = Space2.lineIntersection( line1[ 0 ], line1[ 1 ], line2[ 0 ], line2[ 1 ] );
+    Vect2 intersectionPoint35 = Space2.lineIntersection( line4[ 0 ], line4[ 1 ], line5[ 0 ], line5[ 1 ] );
+    Vect2 intersectionPoint36 = Space2.lineIntersection( line7[ 0 ], line7[ 1 ], line8[ 0 ], line8[ 1 ] );
+    Vect2 intersectionPoint37 = Space2.lineIntersection( line2[ 0 ], line2[ 1 ], line10[ 0 ], line10[ 1 ] );
+    Vect2 intersectionPoint38 = Space2.lineIntersection( line8[ 0 ], line8[ 1 ], line3[ 0 ], line3[ 1 ] );
+    Vect2 intersectionPoint39 = Space2.lineIntersection( line5[ 0 ], line5[ 1 ], line9[ 0 ], line9[ 1 ] );
+
+
+
+    stroke(255, 0, 0);
+    if ( intersectionPoint1 != null ) {
+
+      //      ellipse( intersectionPoint1.x, intersectionPoint1.y, 3, 3 );
+      //      ellipse( intersectionPoint2.x, intersectionPoint2.y, 6, 6 );
+      //      ellipse( intersectionPoint3.x, intersectionPoint3.y, 9, 9 );
+      //      ellipse( intersectionPoint4.x, intersectionPoint4.y, 12, 12 );
+      //      ellipse( intersectionPoint5.x, intersectionPoint5.y, 15, 15 );
+      //      //  ellipse( intersectionPoint6.x, intersectionPoint6.y, 10, 10 );
+      //      ellipse( intersectionPoint7.x, intersectionPoint7.y, 18, 18 );
+      //      ellipse( intersectionPoint8.x, intersectionPoint8.y, 21, 21 );
+      //      ellipse( intersectionPoint10.x, intersectionPoint10.y, 24, 24 );
+      //      ellipse( intersectionPoint11.x, intersectionPoint11.y, 27, 27 );
+      //      ellipse( intersectionPoint12.x, intersectionPoint12.y, 30, 30 );
+      //      ellipse( intersectionPoint13.x, intersectionPoint13.y, 33, 33 );
+      //      ellipse( intersectionPoint14.x, intersectionPoint14.y, 36, 36 );
+
+      fill(180);
+      ellipse( intersectionPoint1.x, intersectionPoint1.y, 5, 5 );
+      ellipse( intersectionPoint2.x, intersectionPoint2.y, 5, 5  );
+      ellipse( intersectionPoint3.x, intersectionPoint3.y, 5, 5  );
+      ellipse( intersectionPoint4.x, intersectionPoint4.y, 5, 5  );
+      ellipse( intersectionPoint5.x, intersectionPoint5.y, 5, 5  ); 
+      ellipse( intersectionPoint7.x, intersectionPoint7.y, 5, 5  );
+      ellipse( intersectionPoint8.x, intersectionPoint8.y, 5, 5  );
+      ellipse( intersectionPoint10.x, intersectionPoint10.y, 5, 5 );
+      ellipse( intersectionPoint11.x, intersectionPoint11.y, 5, 5  );
+      ellipse( intersectionPoint12.x, intersectionPoint12.y, 5, 5  );
+      ellipse( intersectionPoint13.x, intersectionPoint13.y, 5, 5  );
+      ellipse( intersectionPoint14.x, intersectionPoint14.y, 5, 5  );
+
+
+      fill(255);
+      ellipse( intersectionPoint30.x, intersectionPoint30.y, 5, 5  );
+      ellipse( intersectionPoint31.x, intersectionPoint31.y, 5, 5  );
+      ellipse( intersectionPoint32.x, intersectionPoint32.y, 5, 5  );
+      ellipse( intersectionPoint33.x, intersectionPoint33.y, 5, 5  );
+      ellipse( intersectionPoint34.x, intersectionPoint34.y, 5, 5  );
+      ellipse( intersectionPoint35.x, intersectionPoint35.y, 5, 5  );
+      ellipse( intersectionPoint36.x, intersectionPoint36.y, 5, 5  );
+      ellipse( intersectionPoint37.x, intersectionPoint37.y, 5, 5  );
+      ellipse( intersectionPoint38.x, intersectionPoint38.y, 5, 5  );
+      ellipse( intersectionPoint39.x, intersectionPoint39.y, 5, 5  );
+
+      fill(0);  
+      //    ellipse( intersectionPoint9.x, intersectionPoint9.y, 10, 10 );
+      //      ellipse( intersectionPoint20.x, intersectionPoint20.y, 10, 10 );
+      //      ellipse( intersectionPoint21.x, intersectionPoint21.y, 10, 10 );
+      //      ellipse( intersectionPoint22.x, intersectionPoint22.y, 10, 10 );
+      //      ellipse( intersectionPoint23.x, intersectionPoint23.y, 10, 10 );
+      //      ellipse( intersectionPoint24.x, intersectionPoint24.y, 10, 10 );
+      //      ellipse( intersectionPoint25.x, intersectionPoint25.y, 10, 10 );
+      //      ellipse( intersectionPoint26.x, intersectionPoint26.y, 10, 10 );
+      //      ellipse( intersectionPoint27.x, intersectionPoint27.y, 10, 10 );
+      //      ellipse( intersectionPoint28.x, intersectionPoint28.y, 10, 10 );
+      //      ellipse( intersectionPoint29.x, intersectionPoint29.y, 10, 10 );
+
+      ellipse( intersectionPoint20.x, intersectionPoint20.y, 5, 5 );
+      ellipse( intersectionPoint21.x, intersectionPoint21.y, 5, 5 );
+      ellipse( intersectionPoint22.x, intersectionPoint22.y, 5, 5 );
+      ellipse( intersectionPoint23.x, intersectionPoint23.y, 5, 5 );
+      ellipse( intersectionPoint24.x, intersectionPoint24.y, 5, 5 );
+      ellipse( intersectionPoint25.x, intersectionPoint25.y, 5, 5 );
+      ellipse( intersectionPoint26.x, intersectionPoint26.y, 5, 5 );
+      ellipse( intersectionPoint27.x, intersectionPoint27.y, 5, 5 );
+      ellipse( intersectionPoint28.x, intersectionPoint28.y, 5, 5 );
+      ellipse( intersectionPoint29.x, intersectionPoint29.y, 5, 5 );
+
+      //for ( z=1; z<=10; z++){
+
+
+
+      //void star() {
+
+      star[ 0 ] = intersectionPoint22;
+      star[ 1 ] = intersectionPoint30;
+      star[ 2 ] = intersectionPoint24;
+      star[ 3 ] = intersectionPoint32;
+      star[ 4 ] = intersectionPoint26;
+      star[ 5 ] = intersectionPoint34;
+      star[ 6 ] = intersectionPoint28;
+      star[ 7 ] = intersectionPoint36;
+      star[ 8 ] = intersectionPoint20;
+      star[ 9 ] = intersectionPoint39;
+
+
+
+      //void arrow() {
+      arrow[ 0 ] = intersectionPoint21;
+      arrow[ 1 ] = intersectionPoint30;
+      arrow[ 2 ] = intersectionPoint14;
+      arrow[ 3 ] = intersectionPoint31;
+      arrow[ 4 ] = intersectionPoint1;
+      arrow[ 5 ] = intersectionPoint32;
+      arrow[ 6 ] = intersectionPoint27;
+      arrow[ 7 ] = intersectionPoint36;
+
+      details[0] = intersectionPoint33;
+      details[1] = intersectionPoint4;
+      details[2] = intersectionPoint26;
+      details[3] = intersectionPoint10; 
+      details[4]= intersectionPoint34;
+      details[5]= intersectionPoint2;
+      details[6]= intersectionPoint27;
+      //      details[7]= intersectionPoint2;
+      //      details[8]= intersectionPoint35;
+      //      details[9]= intersectionPoint5;
+      //      details[10]= intersectionPoint27;
+    }
+  } 
+  popMatrix();
+}
+
+
+void star() {
+  fill(0, 0, 255, 75);
+  beginShape();
+  for ( int i=0; i< star.length; i++ ) vertex( star[ i ].x, star[ i ].y );
+  endShape( CLOSE );
+}
+
+void arrow() { 
+  fill(rose, 150);
+  beginShape();
+  for ( int i=0; i< arrow.length; i++ ) vertex( arrow[ i ].x, arrow[ i ].y );
+  endShape( CLOSE );
+}
+
+void details() {
+  fill(50, 75);
+  beginShape();
+  for ( int i=0; i< details.length; i++ ) vertex( details[ i ].x, details[ i ].y );
+  endShape( CLOSE );
+}
+
+boolean overSmallButton(float xPos, float yPos) { //activate buttons on individual pages 
+
+    if (mouseX > width*xPos && mouseX< (width*xPos)+buttonSize
+    && mouseY> height*yPos && mouseY> (height*yPos)+buttonSize) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+void DecaPage(boolean showDecaIfTrue) {
+
+  if (showDecaIfTrue = true) {
+    background (#66CDAA);
+    buttonRows();
+  }
+}
+
+void decagon(int d) {
+  noFill();
+  //  strokeWeight(1);
+  stroke(#F5D085);
+
+  beginShape();
+  for (int z=18; z<360; z=z+36) {
+
+    vertex(x+(cos(radians(z))*(d/2)), y+(sin(radians(z))*(d/2)));
+  }
+  endShape(CLOSE);
+}
+
+void decaTangle(int d) { //calculated by connecting midpoints of polygon lines == Daud Sutton book. 
+  stroke(#F5D085);
+  line(x+(cos(radians(0))*(d/2.1)), y+(sin(radians(0))*(d/2.1)), x+(cos(radians(108))*(d/2.1)), y+(sin(radians(108))*(d/2.1))); //line 1
+  line(x+(cos(radians(108))*(d/2.1)), y+(sin(radians(108))*(d/2.1)), x+(cos(radians(216))*(d/2.1)), y+(sin(radians(216))*(d/2.1))); //line 2
+  line(x+(cos(radians(288))*(d/2.1)), y+(sin(radians(288))*(d/2.1)), x+(cos(radians(36))*(d/2.1)), y+(sin(radians(36))*(d/2.1))); // line 3
+  line(x+(cos(radians(36))*(d/2.1)), y+(sin(radians(36))*(d/2.1)), x+(cos(radians(144))*(d/2.1)), y+(sin(radians(144))*(d/2.1))); //line 4
+  line(x+(cos(radians(144))*(d/2.1)), y+(sin(radians(144))*(d/2.1)), x+(cos(radians(252))*(d/2.1)), y+(sin(radians(252))*(d/2.1))); //line 5
+  line(x+(cos(radians(324))*(d/2.1)), y+(sin(radians(324))*(d/2.1)), x+(cos(radians(72))*(d/2.1)), y+(sin(radians(72))*(d/2.1))); //line 6
+  line(x+(cos(radians(72))*(d/2.1)), y+(sin(radians(72))*(d/2.1)), x+(cos(radians(180))*(d/2.1)), y+(sin(radians(180))*(d/2.1))); // line 7
+  line(x+(cos(radians(180))*(d/2.1)), y+(sin(radians(180))*(d/2.1)), x+(cos(radians(288))*(d/2.1)), y+(sin(radians(288))*(d/2.1))); //line 8
+  line(x+(cos(radians(252))*(d/2.1)), y+(sin(radians(252))*(d/2.1)), x+(cos(radians(0))*(d/2.1)), y+(sin(radians(0))*(d/2.1))); //line 9
+  line(x+(cos(radians(216))*(d/2.1)), y+(sin(radians(216))*(d/2.1)), x+(cos(radians(324))*(d/2.1)), y+(sin(radians(324))*(d/2.1))); //line 10
+}
+
+//calculating the distance between the centerpoints of decagons to construct the grid (using isocolese triangle/pythagorean)
+
+
+void deca_grid() {
+background(#66CDAA);
+
+  float decaHeightAcross = sqrt(pow((diameter/2), 2)-(pow(sin(36/2), 2)));
+  float AcrossVal = (2* (diameter/2)*(sin(radians(72/2))))+ 2*(sqrt(pow((diameter/2), 2)-(pow(sin(36/2), 2))));
+  float UpVal2 = diameter + ((2* (diameter/2)*(sin(radians(36/2)))))*.3;
+
+  for (x=-width/2; x<width/2; x = x + int(AcrossVal)) { //rounding the exact distances to an integer
+
+      for (y = -height/2; y<height/2; y = y + int(UpVal2)) {
+      decagon(diameter);
+      //decaTangle(diameter);
+    }
+    
+  }
+
+  pushMatrix(); //second part of grid
+  translate(AcrossVal/2, UpVal2/2);
+
+  for (x=-width/2; x<width/2; x = x + int(AcrossVal)) { //rounding the exact distances to an integer
+
+      for (y = -height/2; y<height/2; y = y + int(UpVal2)) {
+      decagon(diameter);
+      //decaTangle(diameter);
+    }
+  }
+  popMatrix();
+ 
+}
+
+void deca_design() {
+
+
+  float decaHeightAcross = sqrt(pow((diameter/2), 2)-(pow(sin(36/2), 2)));
+  float AcrossVal = (2* (diameter/2)*(sin(radians(72/2))))+ 2*(sqrt(pow((diameter/2), 2)-(pow(sin(36/2), 2))));
+  float UpVal2 = diameter + ((2* (diameter/2)*(sin(radians(36/2)))))*.3;
+
+  for (x=-width/2; x<width/2; x = x + int(AcrossVal)) { //rounding the exact distances to an integer
+
+      for (y = -height/2; y<height/2; y = y + int(UpVal2)) {
+      decagon(diameter);
+      decaTangle(diameter);
+    }
+    buttonRows();
+  }
+
+  pushMatrix(); //second part of grid
+  translate(AcrossVal/2, UpVal2/2);
+
+  for (x=-width/2; x<width/2; x = x + int(AcrossVal)) { //rounding the exact distances to an integer
+
+      for (y = -height/2; y<height/2; y = y + int(UpVal2)) {
+      decagon(diameter);
+      decaTangle(diameter);
+    }
+  }
+  popMatrix();
+}
+int t = 200;
+
+void MenuInfo(boolean showMenuIfOn) {
+
+  if (showMenuIfOn = true) {
+    background(0);
+    textFont(f, 18);
+    fill(beige);
+    book.resize(300, 0);
+    image(book, height/2, 35);
+
+    text("This application was adapted", width/4, height/2 - 200); 
+
+    text("from Daud Sutton's book", width/4, height/2 - 150);
+    textFont(f, 28);
+    text("Islamic Design:", width/4, height/2 - 75);
+    text("A Genius for Geometry", width/4, height/2 - 50 );
+    textFont(f, 18);
+    text("Published in 2007", width/4, height/2  );
+    text(" 'Framing a pattern... ", width/2, height/2 + 120 );
+    text("  maintains a geometric elegance ", width/2, height/2  + 140);
+    text( "at the same time as clearly implying  ", width/2, height/2  + 160);
+    text( "  that it could repeat indefinitely, ", width/2, height/2  + 180);
+
+    text( "as it were, under its borders- ", width/2, height/2 + 200);
+    text("the perfect visual solution to calling ", width/2, height/2 + 220);
+    text( "to mind the idea of infinity, ", width/2, height/2 + 240 );
+    text( "and hence the Infinite, without any pretence", width/2, height/2  + 260);
+
+    text( "of being able to truly capture", width/2, height/2  + 280);
+    text( "such an enigmatic concept visually.' - D. Sutton ", width/2, height/2 + 300);
+    
+    
+  textFont(f, 15);
+  fill(180);
+  text("press P to return to Menu", width*.85, height*.99);
+  fill(beige);
+  }
+}
+
+void infoPage(boolean ShowInfoIfTrue) {
+  background(#FF9292);
+  buttonRows();
+  pushMatrix();
+  translate(width/2, height/2);
+  if (ShowInfoIfTrue = true) {
+    stroke(beige);
+    textFont(f, 18);
+    text("In Islamic art the geometric figure of the circle represents the primordial ", 0, -height/2.5);
+    text("symbol of unity and source of diversity.  The natural division of the circle", 0, -height/2.7);
+    text(" into regular divisions is the ritual starting point for many traditional Islamic patterns", 0, -height/3);
+    text("Richard Henry", 0, -height/3.3);
+    textFont(f, 18);
+    text("press I to", -width/2.5, 0);
+    textFont(cursive, 18);
+    text("illustrate", -width/2.5, 35);
+    text("shapes", -width/2.3, 60);
+    noFill();
+    strokeWeight(1);
+    ellipse(0, 0, diameter*4, diameter*4);
+    strokeWeight(3);
+    beginShape();
+    int s = second();
+    int numberOfSides = int(s/4);
+    for (int z=18; z<360; z=z+(360/numberOfSides)) {
+      textFont(f, 25);
+      text(numberOfSides, 0, 0);
+      vertex(x+(cos(radians(z))*((diameter*4)/2)), y+(sin(radians(z))*((diameter*4)/2)));
+    }
+    endShape(CLOSE);
+  }
+  popMatrix();
+}
+void Triangle(boolean showTriIfTrue) {
+  buttonRows();
+  if (showTriIfTrue = true) {
+    background(#9270A8);
+    //stroke(255, 247, 211);
+    strokeWeight(1);
+
+    buttonRowsShort();
+  }
+}
+
+void Triangle () {
+  pushMatrix();
+  translate(width/2, height/2);
+  noFill();
+  stroke(beige);
+  rectMode(CENTER);
+  //rect(0, 0, diameter, diameter);
+  line(diameter/2, -diameter/2, -diameter/2, diameter/2);
+  line(diameter/2, diameter/2, -diameter/2, - diameter/2);
+  line(-diameter/2, diameter/2, diameter/2, diameter/2); 
+  line(-diameter/2, -diameter/2, diameter/2, -diameter/2); 
+  popMatrix();
+}
+void Triangle_Grid() {
+
+  line ( 50, 0, 50, 700); 
+  for (int x = -350; x < width+350; x=x+50) {
+    line(x+350, 0, x-350, height);
+  }
+  for (int y = -350; y < width+350; y= y+ 50) {
+    //stroke(1);
+    line( y-350, 0, y+350, height);
+  }
+  for (int z = 50; z < height; z = z+50) {
+
+    //stroke(255, 0, 0);
+    line(0, z, width, z);
+  }
+
+  for (int a= 0; a <750; a= a+50) {
+    line ( a, 0, a, 700);
+  }
+}
+
+
+void Triangle_Design() {
+  for (int e= 0; e <800; e= e+300) {
+    for (int l= 150; l <900; l= l+300) {
+
+      fill(252, 93, 123, 50); 
+      beginShape();
+      vertex(e, l);
+      vertex(e+50, l-50);
+      vertex(e+100, l-50);
+      vertex(e+100, l-100);
+      vertex(e+150, l-150);
+      vertex(e+200, l-100);
+      vertex(e+200, l-50);
+      vertex(e+250, l-50);
+      vertex(e+300, l);
+      vertex(e+250, l+50);
+      vertex(e+200, l+50);
+      vertex(e+200, l+100);
+      vertex(e+150, l+150);
+      vertex(e+100, l+100);
+      vertex(e+100, l+50);
+      vertex(e+50, l+50);
+      endShape(CLOSE);
+    }
+  }
+} 
+void buttonPage(boolean showButtonIfTrue) {
+  if (showButtonIfTrue == true) {
+    background (#66CDAA); //cerulean
+    //  lattice = loadImage("lattice.jpg");
+    //  button = loadImage("button.png");
+    //image(lattice, 0, 0);
+    lattice.resize(width, 0);
+    image(lattice, 0, 0);
+    button.resize(160, 0);
+    image(button, width/6.4, height/6.4); //top left - decagon
+    image(button, (width/1.6)-4, height/6.4); //top right - rosette
+    image(button, width/6.4, height/1.6); // bottom left
+    image(button, (width/1.6)-3, (height/1.6)-4); //bottom right
+    textFont(cursive, 16);
+    fill(beige);
+    text("Polygons", width/6.4+75, height/6.4+85);
+    text("Circles", (width/1.6)+71, height/6.4+85);
+    text("Triangles", width/6.4+75, height/1.6+85);
+    text("Learn",(width/1.6)+68, (height/1.6)+67);
+    text("More",(width/1.6)+92, (height/1.6)+91);
+    rectMode(CENTER);
+    noStroke();
+    fill(beige, 110);
+    rect(width/2, height/2, 300, 50);
+    fill(0);
+    textFont(f, 30);
+    text("Click a button to start",width/2, height/2 + 10);
+    
+  }
+}
+
+
+void buttonRows() {
+
+  button.resize(buttonSize, 0);
+  image(button, width*.2, height*.8);
+
+  image(button, width*.4, height*.8);
+
+  image(button, width*.6, height*.8);
+
+  image(button, width*.8, height*.8);
+
+  stroke(0);
+  fill(beige);
+  textFont(f, 15);
+  text("1|element", width*.27, height*.86);
+  text("press E", width*.27, height*.89);
+
+  text("2|grid", width*.47, height*.86);
+    text("press G", width*.47, height*.89);
+
+  text("3|design", width*.67, height*.86);
+    text("press D", width*.67, height*.89);
+
+  text("Info", width*.87, height*.86);
+  text("press I", width*.87, height*.89);
+  
+  textFont(f, 24);
+  text("press P to return to Menu", width/1.75, height*.99);
+}
+
+void buttonRowsShort() {
+
+  button.resize(buttonSize, 0);
+  image(button, width*.2, height*.8);
+
+  image(button, width*.4, height*.8);
+
+  image(button, width*.6, height*.8);
+
+//  image(button, width*.8, height*.8);
+
+  stroke(0);
+  fill(beige);
+  textFont(f, 15);
+  text("1|element", width*.27, height*.86);
+  text("press E", width*.27, height*.89);
+
+  text("2|grid", width*.47, height*.86);
+    text("press G", width*.47, height*.89);
+
+  text("3|design", width*.67, height*.86);
+    text("press D", width*.67, height*.89);
+
+//  text("Info", width*.87, height*.86);
+//  text("press I", width*.87, height*.89);
+  
+  textFont(f, 24);
+  text("press P to return to Menu", width/2, height*.99);
+}
+void Rosette(boolean showRoseIfTrue) {
+
+  if (showRoseIfTrue = true) {
+    background(#FF9292);
+
+    buttonRows();
+
+    int x = width/2; 
+    int y= height/2;
+    noFill();
+  }
+}
+
+void circle_Center() {
+  stroke(beige);
+  for (int i=0;i<width+50;i=i+50) {
+    for (int j=0;j<width+50;j=j+86) {
+      ellipse(i, j, r, r);
+    }
+  }
+
+  for (int i=25;i<width + 50;i=i+50) {
+    for (int j=43;j<width + 50;j=j+86) {
+      ellipse(i, j, r, r);
+    }
+  }
+} 
+
+void circle_Molecule12() {
+  stroke(beige);
+  //------- centre
+  //ellipse(x-50, y, r, r);
+  //ellipse(x+50, y, r, r);
+
+  ellipse(x, y, r, r); //center circle
+  //-------- center up two-------------------------------------------
+  ellipse(x, y+86, r, r);
+  ellipse(x, y-86, r, r);
+
+  //--------2ond row down---------------------------
+  ellipse(x-76, y+43, r, r);
+  ellipse(x+76, y+43, r, r);
+  ellipse(x-76, y-43, r, r);
+  ellipse(x+76, y-43, r, r);
+}
+void circle_Lines() {
+
+  //line(x1, y1, x2, y2)
+  // horizontal lines
+  line( x, y+86, x, y-86); // center
+  line( x+50, y+86, x+50, y-86);
+  line( x-50, y+86, x-50, y-86); // 
+
+  //Digonals
+  line( x+50, y+86, x-100, y);
+  line(x+50, y-86, x-100, y);
+  line( x-50, y+86, x+100, y);
+  line(x-50, y-86, x+100, y);
+  line(x-76, y-43, x+76, y+43);
+  line(x+76, y-43, x-76, y+43);
+}
+
+void circle_grid() {
+  noFill();
+  stroke(beige);
+  for (int i=0;i<750;i=i+50) {
+    for (int j=0;j<750;j=j+86) {
+      ellipse(i, j, r, r);
+    }
+  }
+
+  for (int i=25;i<750;i=i+50) {
+    for (int j=43;j<750;j=j+86) {
+      ellipse(i, j, r, r);
+    }
+  }
+}  
+void circle_Grid() {
+  // row middle--------------------------------------------------
+  pushMatrix();
+  translate(width/2, height/2);
+  ellipse(x-50, y, r, r);
+  ellipse(x+50, y, r, r);//center circle
+  ellipse(x, y, r, r);
+  ellipse(x-100, y, r, r);
+  ellipse(x+100, y, r, r);//center circle
+  ellipse(x-150, y, r, r);
+  ellipse(x+150, y, r, r);
+  ellipse(x-200, y, r, r);
+  ellipse(x+200, y, r, r);
+  ellipse(x-250, y, r, r);
+  ellipse(x+250, y, r, r);
+  ellipse(x+300, y, r, r);
+  ellipse(x-300, y, r, r);
+
+  //------------------------------------------ 2 ROWs UP+DOWN
+
+  ellipse(x-75, y-43, r, r);
+  ellipse(x+75, y-43, r, r);
+  ellipse(x-125, y-43, r, r);
+  ellipse(x+125, y-43, r, r);
+  ellipse(x-175, y-43, r, r);
+  ellipse(x+175, y-43, r, r);
+  ellipse(x-225, y-43, r, r);
+  ellipse(x+225, y-43, r, r);
+  ellipse(x-75, y+43, r, r);
+  ellipse(x+75, y+43, r, r);
+  ellipse(x-125, y+43, r, r);
+  ellipse(x+125, y+43, r, r);
+  ellipse(x-175, y+43, r, r);
+  ellipse(x+175, y+43, r, r);
+  ellipse(x-225, y+43, r, r);
+  ellipse(x+225, y+43, r, r);
+  //--------------------------------------------------3 ROWs UP+DOWN
+
+  ellipse(x-150, y-86, r, r);
+  ellipse(x-250, y-86, r, r);
+  ellipse(x-200, y-86, r, r);
+  ellipse(x-100, y-86, r, r);
+  ellipse(x-50, y-86, r, r);
+  ellipse(x, y-86, r, r);
+  ellipse(x+250, y-86, r, r);
+  ellipse(x+200, y-86, r, r);
+  ellipse(x+100, y-86, r, r);
+  ellipse(x+50, y-86, r, r);
+  ellipse(x+150, y-86, r, r);
+
+  ellipse(x, y+86, r, r);
+  ellipse(x+150, y+86, r, r);
+  ellipse(x+50, y+86, r, r);
+  ellipse(x+100, y+86, r, r);
+  ellipse(x+200, y+86, r, r);
+  ellipse(x+250, y+86, r, r);
+
+  ellipse(x-250, y+86, r, r);
+  ellipse(x-200, y+86, r, r);
+  ellipse(x-100, y+86, r, r);
+  ellipse(x-50, y+86, r, r);
+  ellipse(x-150, y+86, r, r);
+
+
+  //--------------------------------------------------4 ROWs UP+DOWN
+
+  ellipse(x-25, y-129, r, r);
+  ellipse(x+25, y-129, r, r);
+  ellipse(x-75, y-129, r, r);
+  ellipse(x+75, y-129, r, r);
+  ellipse(x-125, y-129, r, r);
+  ellipse(x+125, y-129, r, r);
+  ellipse(x-175, y-129, r, r);
+  ellipse(x+175, y-129, r, r);
+  ellipse(x-225, y-129, r, r);
+  ellipse(x+225, y-129, r, r);
+  ellipse(x-75, y+129, r, r);
+
+  ellipse(x+25, y+129, r, r);
+  ellipse(x-25, y+129, r, r);
+  ellipse(x+75, y+129, r, r);
+  ellipse(x-125, y+129, r, r);
+  ellipse(x+125, y+129, r, r);
+  ellipse(x-175, y+129, r, r);
+  ellipse(x+175, y+129, r, r);
+  ellipse(x-225, y+129, r, r);
+  ellipse(x+225, y+129, r, r);
+  popMatrix();
+}
+
+void poli_Shape() {
+  for (int h=0;h<750;h=h+100) {
+    for (int g=0;g<750;g=g+172) {
+      stroke(200, 55, 9);
+      fill(200, 55, 9, 50); 
+      beginShape();
+      vertex(h, g);
+      vertex(h+19, g+19);
+      vertex(h+25, g+43);
+      vertex(h, g+50);
+      vertex(h-25, g+43);
+      vertex(h-18, g+19);
+      endShape(CLOSE);
+      beginShape();
+      vertex(h, g-49);
+      vertex (h+25, g-43); 
+      vertex (h+19, g-19);
+      vertex (h, g+1);
+      vertex (h-20, g-19);
+      vertex (h-25, g-43); 
+      vertex(h, g-49);
+      endShape();
+    }
+  }
+}
+void poli_Shape2() {
+  for (int h=50;h<750;h=h+100) {
+    for (int g=86;g<750;g=g+172) {
+      stroke(200, 55, 9);
+      beginShape();
+      vertex(h-18, g+19);
+      vertex(h-25, g+43);
+      vertex(h, g+50);
+      vertex(h+25, g+43);
+      vertex(h+19, g+19);
+      vertex(h, g);
+
+      endShape(CLOSE);
+      beginShape();
+      vertex(h, g-49);
+      vertex (h+24, g-43); 
+      vertex (h+19, g-19);
+      vertex (h, g+1);
+      vertex (h-20, g-19);
+      vertex (h-24, g-43); 
+      vertex(h, g-49);
+      endShape();
+    }
+  }
+}
+void showIntro(boolean showIntroIfTrue) { //zj
+  //I use showIntroIfTrue this variable 
+  //to determine if showIntro method runs
+
+  if (showIntroIfTrue == true) { //zj
+    //maybe you need to add background() below?
+
+    rectMode(CORNER);
+    //fill(0, 11);
+    //rect(0, 0, width, height);
+    textAlign(CENTER);
+    fill(#FFF7D3);
+    stroke(#FFF7D3);
+    //noStroke();
+    textFont(f, 60);
+    text("Islamic Design", width/3, height/3);
+    text("Genius for Geometry", width/2.3, height/2.3);
+    textSize(15);
+    text("Coded for Expressive Computation, Fall 2013, Garrison LeMasters", width/2, height/1.75);
+    textSize(16);
+    text("Coded in Processing 2.0", width/2, height/1.65);
+    text("Press 'p' to Play", width/2, height/1.45);
+    textFont(cursive, 35);
+    text("Illustrated", width/1.9, height/1.9);
+    noFill();
+    line(0, (height*.75)+50, width, (height*.75)+50);
+    line((width*.75)+50, 0, (width*.75)+50, height);
+      z= z+50;
+    ellipseMode(CENTER);
+    stroke(beige, 200);
+    //ellipse((width*.75)+50, (height*.75)+50, 100, 100);
+    ellipse(width*.75+50-z, (height*.75)+50, 100, 100);
+    ellipse((width*.75)+z, (height*.75)+50, 100, 100);
+    ellipse((width*.75)+50, height*.75+50-z, 100, 100);
+    ellipse((width*.75)+50, (height*.75)+50+z, 100, 100);
+  
+
+
+    stroke(255, 0, 0, s*3);
+    arc(width*.75, (height*.75)+50, 100, 100, PI/2, 3*PI/2);
+
+    arc((width*.75)+100, (height*.75)+50, 100, 100, -PI/2, PI/2) ;
+
+    arc((width*.75)+50, height*.75, 100, 100, PI, 2*PI);
+
+    arc((width*.75)+50, (height*.75)+100, 100, 100, 0, PI); //----
+    
+    arc(width*.75, (height*.75)+50, 100, 100, -PI/2, PI/2); 
+
+    arc((width*.75)+100, (height*.75)+50, 100, 100,PI/2, 3*PI/2 ) ;
+
+    arc((width*.75)+50, height*.75, 100, 100,0, PI );
+
+    arc((width*.75)+50, (height*.75)+100, 100, 100,PI, 2*PI );
+    
+  }
+}
+
+
